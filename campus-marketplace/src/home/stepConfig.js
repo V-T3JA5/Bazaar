@@ -35,7 +35,7 @@ export const CATEGORIES = [
   },
   {
     name: 'Other',
-    model: null, // no model supplied yet — placeholder torus
+    model: '/models/other_web.glb'`
     shape: 'torus',
     reversed: false, // card left / model right
     tilt: 0.95,
