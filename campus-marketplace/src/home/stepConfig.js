@@ -16,8 +16,8 @@ export const CATEGORIES = [
     model: '/models/book_web.glb',
     shape: null,
     reversed: false, // card left / model right
-    tilt: 0.95, // viewing elevation in radians — both slabs are flat, so we look down on them
-    edgeAngle: 20, // degrees; edges between faces flatter than this are dropped
+    tilt: 0,
+    edgeAngle: 20,
     baseRotation: [0, 0, 0],
     description:
       'Textbooks, calculators, lab supplies — everything you only need for one semester.',
@@ -27,7 +27,7 @@ export const CATEGORIES = [
     model: '/models/chip_web.glb',
     shape: null,
     reversed: true, // card right / model left
-    tilt: 0.95,
+    tilt: 0,
     edgeAngle: 20,
     baseRotation: [0, 0, 0],
     description:
@@ -38,16 +38,17 @@ export const CATEGORIES = [
     model: '/models/other_web.glb',
     shape: null,
     reversed: false, // card left / model right
-    tilt: 0.95,
+    tilt: 0,
     edgeAngle: 20,
-    baseRotation: [Math.PI / 2, 0, 0], // lay the ring flat so the turntable view suits it
+    baseRotation: [0, 0, 0],
     description:
-      'Furniture, kitchen stuff, bikes — the things that don\u2019t fit anywhere else.',
+      'Furniture, kitchen stuff, bikes — the things that don’t fit anywhere else.',
   },
 ]
 
 // hero + 3×(enter/read) + closing
 export const TOTAL_STEPS = 1 + CATEGORIES.length * 2 + 1
+
 // "01 / 04" style labels: three categories + the closing card
 export const LABEL_TOTAL = String(CATEGORIES.length + 1).padStart(2, '0')
 
