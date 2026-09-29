@@ -14,7 +14,7 @@ gsap.registerPlugin(SplitText)
 // canvas first mounts
 CATEGORIES.forEach((c) => c.model && useGLTF.preload(c.model))
 
-// ─────────────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────��[...]
 // HOW THIS FILE ANIMATES — read before changing anything.
 //
 // A layer is always in one of three states: idle / entering / reading.
@@ -32,7 +32,7 @@ CATEGORIES.forEach((c) => c.model && useGLTF.preload(c.model))
 // back through its OWN side.
 //   model side  = right for Academic/Other, left for Electronics
 //   card  side  = the opposite half of the screen
-// ─────────────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────��[...]
 
 const CARD_OPEN = 'inset(-6% -6% -6% -6%)'
 const TEXT_OPEN = 'inset(0% 0% 0% 0%)'
@@ -53,7 +53,6 @@ export default function CategoryLayer({ index, category, state }) {
   const titleRef = useRef(null)
   const ruleRef = useRef(null)
   const descRef = useRef(null)
-  const numeralRef = useRef(null)
   const canvasWrapRef = useRef(null)
 
   const outerRef = useRef(null)
@@ -110,7 +109,6 @@ export default function CategoryLayer({ index, category, state }) {
     }
 
     gsap.set(card, { autoAlpha: 0, x: cardSide * 60, clipPath: closedClip })
-    gsap.set(numeralRef.current, { opacity: 0, scale: 0.85 })
     gsap.set(ruleRef.current, { scaleX: 0 })
     gsap.set(descRef.current, { clipPath: TEXT_CLOSED, y: 10 })
     cardParked.current = true
@@ -121,7 +119,7 @@ export default function CategoryLayer({ index, category, state }) {
     return () => {
       window.removeEventListener('resize', applyBase)
       cardTl.current?.kill()
-      gsap.killTweensOf([card, title, ruleRef.current, descRef.current, numeralRef.current])
+      gsap.killTweensOf([card, title, ruleRef.current, descRef.current])
       split.revert()
       splitRef.current = null
     }
@@ -158,12 +156,10 @@ export default function CategoryLayer({ index, category, state }) {
       cardParked.current = false
       tl.set(card, { autoAlpha: 1 }, 0)
       tl.to(card, { clipPath: CARD_OPEN, x: 0, duration: 1.15, ease: 'expo.out' }, 0)
-      tl.to(numeralRef.current, { opacity: 1, scale: 1, duration: 1.3, ease: 'power3.out' }, 0.15)
       tl.to(chars, { opacity: 1, yPercent: 0, rotate: 0, duration: 0.9, stagger: 0.035, ease: 'expo.out' }, 0.3)
     } else if (!nowActive && wasActive) {
       // EXIT — lifts straight up and fades (not the wipe used for entry)
       tl.to(card, { y: -70, autoAlpha: 0, duration: 0.7, ease: 'power2.in' }, 0)
-      tl.to(numeralRef.current, { opacity: 0, scale: 0.85, duration: 0.6, ease: 'power2.in' }, 0)
       tl.add(() => {
         cardParked.current = true
         // reset to the wipe-closed pose, invisibly, so the next entry still wipes open correctly
@@ -323,15 +319,10 @@ export default function CategoryLayer({ index, category, state }) {
     if (spinRef.current) gsap.to(spinRef.current.scale, { x: 1, y: 1, z: 1, duration: 0.6, ease: 'power2.out', overwrite: 'auto' })
   }
 
-  const label = String(index + 1).padStart(2, '0')
-
   return (
     <div className="cat-layer" style={{ pointerEvents: isActive ? 'auto' : 'none' }} aria-hidden={!isActive}>
       <div className={`cat-layer__inner ${category.reversed ? 'is-reversed' : ''}`}>
         <div className="cat-layer__text-col">
-          <span ref={numeralRef} className="display cat-layer__numeral" aria-hidden="true">
-            {label}
-          </span>
           <Link
             ref={cardRef}
             to={`/category/${category.name}`}
@@ -341,7 +332,7 @@ export default function CategoryLayer({ index, category, state }) {
             tabIndex={isActive ? 0 : -1}
           >
             <span className="mono cat-layer__index">
-              {label} / {LABEL_TOTAL}
+              {LABEL_TOTAL}
             </span>
             <h2 ref={titleRef} className="display cat-layer__title">
               {category.name}
@@ -402,18 +393,6 @@ export default function CategoryLayer({ index, category, state }) {
           justify-content: center;
           padding: 0 5vw;
           min-width: 0;
-        }
-        .cat-layer__numeral {
-          position: absolute;
-          bottom: 4vh;
-          ${category.reversed ? 'right: 3vw;' : 'left: 3vw;'}
-          font-size: clamp(6rem, 14vw, 11rem);
-          color: transparent;
-          -webkit-text-stroke: 1px var(--border-strong);
-          opacity: 0;
-          line-height: 1;
-          user-select: none;
-          z-index: 0;
         }
         .cat-layer__card {
           position: relative;
