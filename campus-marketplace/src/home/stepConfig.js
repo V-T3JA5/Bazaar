@@ -35,7 +35,7 @@ export const CATEGORIES = [
   },
   {
     name: 'Other',
-    model: '/models/other_web.glb'`
+    model: '/models/other_web.glb',
     shape: null,
     reversed: false, // card left / model right
     tilt: 0.95,
