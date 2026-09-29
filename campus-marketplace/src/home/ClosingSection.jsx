@@ -55,7 +55,12 @@ export default function ClosingSection({ active }) {
   }, [active])
 
   return (
-    <div ref={rootRef} className="closing" style={{ pointerEvents: active ? 'auto' : 'none' }} aria-hidden={!active}>
+    <div
+      ref={rootRef}
+      className="closing"
+      style={{ pointerEvents: active ? 'auto' : 'none' }}
+      aria-hidden={!active}
+    >
       <a
         ref={leftRef}
         className="closing__half closing__half--left"
@@ -66,27 +71,51 @@ export default function ClosingSection({ active }) {
       >
         <div ref={leftCardRef} className="closing__card">
           <span className="display closing__letter">T</span>
+
           <div className="closing__copy">
             <span className="mono closing__label">
               {LABEL_TOTAL} / {LABEL_TOTAL}
             </span>
-            <h2 className="display closing__title">About the creator</h2>
-            <span className="mono closing__cta">Instagram →</span>
+
+            <h2 className="display closing__title">
+              About the creator
+            </h2>
+
+            <span className="mono closing__cta">
+              Instagram →
+            </span>
           </div>
         </div>
       </a>
 
-      <Link ref={rightRef} className="closing__half closing__half--right" to="/discover" tabIndex={active ? 0 : -1}>
+      <Link
+        ref={rightRef}
+        className="closing__half closing__half--right"
+        to="/discover"
+        tabIndex={active ? 0 : -1}
+      >
         <div ref={rightCardRef} className="closing__card">
-          <span className="mono closing__label">Every category, one place</span>
+          <span className="mono closing__label">
+            Every category, one place
+          </span>
+
           <div className="closing__copy">
-            <h2 className="display closing__title">Discover products</h2>
-            <span className="mono closing__cta">Browse all listings →</span>
+            <h2 className="display closing__title">
+              Discover products
+            </h2>
+
+            <span className="mono closing__cta">
+              Browse all listings →
+            </span>
           </div>
         </div>
       </Link>
 
-      <span ref={seamRef} className="closing__seam" aria-hidden="true" />
+      <span
+        ref={seamRef}
+        className="closing__seam"
+        aria-hidden="true"
+      />
 
       <style>{`
         .closing {
@@ -94,73 +123,104 @@ export default function ClosingSection({ active }) {
           inset: 0;
           overflow: hidden;
         }
+
         .closing__half {
           position: absolute;
           inset: 0;
           display: flex;
           align-items: center;
-          transition: background 0.45s ease, color 0.45s ease;
         }
-        /* left: dark palette, hover → light. right: light palette, hover → dark.
-           Colours come from the fixed --ink-* / --paper-* tokens, so both are
-           visible at once whichever site theme is active. */
+
         .closing__half--left {
           clip-path: polygon(0 0, 58% 0, 42% 100%, 0 100%);
           background: var(--ink-bg);
           color: var(--ink-text);
-          --line: rgba(245, 247, 250, 0.34);
           padding-left: 6vw;
         }
-        .closing__half--left:hover {
-          background: var(--paper-bg);
-          color: var(--paper-text);
-          --line: rgba(26, 42, 74, 0.34);
-        }
+
         .closing__half--right {
           clip-path: polygon(58% 0, 100% 0, 100% 100%, 42% 100%);
           background: var(--paper-bg);
           color: var(--paper-text);
-          --line: rgba(26, 42, 74, 0.34);
           padding-left: 63vw;
         }
-        .closing__half--right:hover {
-          background: var(--ink-bg);
-          color: var(--ink-text);
-          --line: rgba(245, 247, 250, 0.34);
-        }
+
         .closing__card {
           width: min(32vw, 480px);
           min-height: 330px;
           padding: 28px 30px;
-          border: 1px solid var(--line);
+          border: 1px solid;
           border-radius: 6px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
           gap: 28px;
-          transition: border-color 0.45s ease;
+          transition:
+            background 0.4s ease,
+            color 0.4s ease,
+            border-color 0.4s ease;
         }
+
+        /* LEFT CARD */
+        .closing__half--left .closing__card {
+          background: var(--ink-bg);
+          color: var(--ink-text);
+          border-color: rgba(245, 247, 250, 0.34);
+        }
+
+        .closing__half--left .closing__card:hover {
+          background: var(--paper-bg);
+          color: var(--paper-text);
+          border-color: rgba(26, 42, 74, 0.34);
+        }
+
+        /* RIGHT CARD */
+        .closing__half--right .closing__card {
+          background: var(--paper-bg);
+          color: var(--paper-text);
+          border-color: rgba(26, 42, 74, 0.34);
+        }
+
+        .closing__half--right .closing__card:hover {
+          background: var(--ink-bg);
+          color: var(--ink-text);
+          border-color: rgba(245, 247, 250, 0.34);
+        }
+
         .closing__letter {
           font-size: clamp(5.5rem, 10vw, 8.5rem);
         }
+
         .closing__copy {
           display: flex;
           flex-direction: column;
           gap: 10px;
         }
+
         .closing__label,
         .closing__cta {
           opacity: 0.75;
         }
+
         .closing__title {
           font-size: clamp(2.2rem, 3.8vw, 3.6rem);
         }
-        /* the "/" itself: a thin sliver clipped along exactly the same edge as the halves */
+
+        /* Diagonal seam */
         .closing__seam {
           position: absolute;
           inset: 0;
-          background: linear-gradient(to bottom, var(--ink-accent), var(--paper-accent));
-          clip-path: polygon(58% 0, calc(58% + 3px) 0, calc(42% + 3px) 100%, 42% 100%);
+          background: linear-gradient(
+            to bottom,
+            var(--ink-accent),
+            var(--paper-accent)
+          );
+          clip-path: polygon(
+            58% 0,
+            calc(58% + 3px) 0,
+            calc(42% + 3px) 100%,
+            42% 100%
+          );
           pointer-events: none;
         }
       `}</style>
