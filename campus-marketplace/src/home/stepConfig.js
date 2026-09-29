@@ -3,9 +3,9 @@ export const CATEGORIES = [
     name: 'Academic',
     model: '/models/book_web.glb',
     shape: null,
-    reversed: false,
-    tilt: 0.95,
-    edgeAngle: 20,
+    reversed: false, // card left / model right
+    tilt: 0.95, // viewing elevation in radians — both slabs are flat, so we look down on them
+    edgeAngle: 20, // degrees; edges between faces flatter than this are dropped
     baseRotation: [0, 0, 0],
     description:
       'Textbooks, calculators, lab supplies — everything you only need for one semester.',
@@ -14,7 +14,7 @@ export const CATEGORIES = [
     name: 'Electronics',
     model: '/models/chip_web.glb',
     shape: null,
-    reversed: true,
+    reversed: true, // card right / model left
     tilt: 0.95,
     edgeAngle: 20,
     baseRotation: [0, 0, 0],
