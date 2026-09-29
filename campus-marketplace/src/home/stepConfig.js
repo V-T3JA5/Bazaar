@@ -1,22 +1,10 @@
-// The whole home experience is one linear sequence of discrete steps:
-//   0 → hero ("Bazaar")
-//   1 → category 0, title only   ("entering")
-//   2 → category 0, title + copy ("reading")
-//   3 → category 1, title only
-//   4 → category 1, title + copy
-//   5 → category 2, title only
-//   6 → category 2, title + copy
-//   7 → closing (about the creator / discover products)
-// One wheel/swipe/key gesture moves exactly one step, in either direction —
-// see HomeExperience for why.
-
 export const CATEGORIES = [
   {
     name: 'Academic',
     model: '/models/book_web.glb',
     shape: null,
-    reversed: false, // card left / model right
-    tilt: 0,
+    reversed: false,
+    tilt: 0.95,
     edgeAngle: 20,
     baseRotation: [0, 0, 0],
     description:
@@ -26,8 +14,8 @@ export const CATEGORIES = [
     name: 'Electronics',
     model: '/models/chip_web.glb',
     shape: null,
-    reversed: true, // card right / model left
-    tilt: 0,
+    reversed: true,
+    tilt: 0.95,
     edgeAngle: 20,
     baseRotation: [0, 0, 0],
     description:
@@ -37,8 +25,8 @@ export const CATEGORIES = [
     name: 'Other',
     model: '/models/other_web.glb',
     shape: null,
-    reversed: false, // card left / model right
-    tilt: 0,
+    reversed: false,
+    tilt: 0.95,
     edgeAngle: 20,
     baseRotation: [0, 0, 0],
     description:
@@ -46,10 +34,8 @@ export const CATEGORIES = [
   },
 ]
 
-// hero + 3×(enter/read) + closing
 export const TOTAL_STEPS = 1 + CATEGORIES.length * 2 + 1
 
-// "01 / 04" style labels: three categories + the closing card
 export const LABEL_TOTAL = String(CATEGORIES.length + 1).padStart(2, '0')
 
 export function categoryIndexForStep(step) {
@@ -61,12 +47,10 @@ export function isClosingStep(step) {
   return step === TOTAL_STEPS - 1
 }
 
-// 'enter' = title only, 'read' = title shrunk + description visible
 export function phaseForStep(step) {
   return (step - 1) % 2 === 0 ? 'enter' : 'read'
 }
 
-// state of category `i` given the current global step
 export function categoryState(i, step) {
   if (categoryIndexForStep(step) !== i) return 'idle'
   return phaseForStep(step) === 'enter' ? 'entering' : 'reading'
