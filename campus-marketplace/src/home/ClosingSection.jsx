@@ -4,7 +4,7 @@ import gsap from 'gsap'
 import { LABEL_TOTAL } from './stepConfig.js'
 
 // Edit this one line once you have the real handle — used here and in MobileStack.
-export const CREATOR_INSTAGRAM_URL = 'https://instagram.com/yourhandle'
+export const CREATOR_INSTAGRAM_URL = 'https://instagram.com/the__craftsman__'
 
 // Geometry, in one place. The diagonal runs from (SEAM_TOP, 0) to (SEAM_BOTTOM, 100%).
 // Each half is clipped to one side of that line, and content is padded so it
