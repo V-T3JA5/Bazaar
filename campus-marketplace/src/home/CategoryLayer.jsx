@@ -10,29 +10,7 @@ import { useTheme } from '../context/ThemeContext.jsx'
 
 gsap.registerPlugin(SplitText)
 
-// start fetching the model files as soon as the app loads, not when the
-// canvas first mounts
-CATEGORIES.forEach((c) => c.model && useGLTF.preload(c.model))
 
-// ─────────────────────────────────────────────────────────────────────────
-// HOW THIS FILE ANIMATES — read before changing anything.
-//
-// A layer is always in one of three states: idle / entering / reading.
-// Every state change builds a NEW timeline that animates from wherever
-// things currently are to the new target, after killing the old timeline.
-//
-// We never call `ctx.revert()` between states. revert() snaps every
-// animated property back to its pre-animation value, which is exactly what
-// made the earlier versions have "no animation": each step change first
-// reset the model to its resting spot and the card to opacity 0, *then*
-// started a tween that had nothing left to travel. tween.kill() stops
-// motion and leaves values where they are, which is what we want.
-//
-// Direction language, used everywhere: each thing enters from and exits
-// back through its OWN side.
-//   model side = right for Academic/Other, left for Electronics
-//   card side  = the opposite half of the screen
-// ─────────────────────────────────────────────────────────────────────────
 
 const CARD_OPEN = 'inset(-6% -6% -6% -6%)'
 const TEXT_OPEN = 'inset(0% 0% 0% 0%)'
@@ -89,7 +67,7 @@ export default function CategoryLayer({ index, category, state }) {
     if (n && outerRef.current) setModelReady(true)
   }, [])
 
-  // ── one-time setup: resting (idle) visual state, title split, sizing ──
+  //idle
   useLayoutEffect(() => {
     const card = cardRef.current
     const title = titleRef.current
@@ -99,7 +77,7 @@ export default function CategoryLayer({ index, category, state }) {
 
     gsap.set(split.chars, { display: 'inline-block' })
 
-    // Fit the title to the card
+    // card title
     const measureBase = () => {
       const rem =
         parseFloat(getComputedStyle(document.documentElement).fontSize) || 16
@@ -175,10 +153,10 @@ export default function CategoryLayer({ index, category, state }) {
       splitRef.current = null
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [])
 
-  // ── card + text: entry / exit / entering↔reading ──
+  
   useEffect(() => {
     const prev = prevState.current
     prevState.current = state
@@ -312,10 +290,10 @@ export default function CategoryLayer({ index, category, state }) {
       )
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [state])
 
-  // ── the 3D model: fly in from its side / fly out through the same side ──
+  //3D model
   useEffect(() => {
     if (!modelReady) return
 
@@ -325,7 +303,7 @@ export default function CategoryLayer({ index, category, state }) {
     const park = () =>
       modelSide * (boundsRef.current.halfWidth + 1.8)
 
-    // first time only: place the model and create the turntable spin
+    // model entry
     if (!idleSpin.current) {
       idleSpin.current = gsap.to(spin.rotation, {
         y: `+=${Math.PI * 2}`,
@@ -439,10 +417,10 @@ export default function CategoryLayer({ index, category, state }) {
       })
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [isActive, modelReady])
 
-  // let the canvas warm up, then stop drawing while this category is off-screen
+  
   const activeRef = useRef(isActive)
   activeRef.current = isActive
 
@@ -464,7 +442,7 @@ export default function CategoryLayer({ index, category, state }) {
     [],
   )
 
-  // ── hover-follow ──
+  
   const isHoveringRef = useRef(false)
   const lastPointer = useRef({ x: 0, y: 0 })
   const isActiveRef = useRef(isActive)
@@ -544,7 +522,7 @@ export default function CategoryLayer({ index, category, state }) {
     }
   }, [resumeIdleSpin])
 
-  // if this layer goes idle while the cursor is still over the model
+  
   useEffect(() => {
     if (!isActive) endHover()
   }, [isActive, endHover])
