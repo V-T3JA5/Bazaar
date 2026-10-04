@@ -8,18 +8,7 @@ import CategoryLayer from './CategoryLayer.jsx'
 import ClosingSection from './ClosingSection.jsx'
 import MobileStack from './MobileStack.jsx'
 
-// A single physical scroll gesture — a hard fast flick or a light nudge —
-// should always move exactly one step. The hard part is trackpads: one
-// flick can fire wheel events continuously for over a second as its
-// momentum decays, long after the "gesture" felt like it ended. A fixed
-// lock timeout starting from the first event can expire mid-momentum,
-// letting the tail end of one flick get read as a second gesture.
-//
-// So instead: every wheel event that arrives while locked pushes the
-// unlock further out (QUIET_MS from *that* event), and unlocking also
-// never happens before MIN_ANIM_MS has passed since the step actually
-// changed. The lock only releases once the input has been genuinely
-// quiet AND the transition has had time to finish.
+
 const MIN_ANIM_MS = 1150
 const QUIET_MS = 260
 const WHEEL_THRESHOLD = 4
@@ -53,7 +42,7 @@ function SteppedExperience() {
     setNavVisible(step > 0)
   }, [step, setNavVisible])
 
-  // lock the page's own scroll — this experience owns the wheel/touch instead
+  
   useEffect(() => {
     const prevOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
@@ -97,7 +86,7 @@ function SteppedExperience() {
       e.preventDefault()
       if (Math.abs(e.deltaY) < WHEEL_THRESHOLD) return
       if (lockedRef.current) {
-        armUnlock() // still moving — keep pushing the unlock back
+        armUnlock() 
         return
       }
       go(e.deltaY > 0 ? 1 : -1)
@@ -118,7 +107,7 @@ function SteppedExperience() {
       touchStartY.current = e.touches[0].clientY
     }
     const onTouchMove = (e) => {
-      if (e.touches.length > 1) return // let pinch-zoom through
+      if (e.touches.length > 1) return 
       e.preventDefault()
     }
     const onTouchEnd = (e) => {
