@@ -17,7 +17,7 @@ export default function DiscoverPage() {
     setNavVisible(true)
   }, [setNavVisible])
 
-  // keep the search box in sync if the person arrives here again via the hero search
+  
   useEffect(() => {
     const q = searchParams.get('q')
     if (q) setQuery(q)
