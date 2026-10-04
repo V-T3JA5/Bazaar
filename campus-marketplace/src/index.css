@@ -1,4 +1,4 @@
-/* ---- theme tokens ---- */
+
 :root {
   --bg: #f6f3ec;
   --bg-raised: #ffffff;
@@ -18,8 +18,7 @@
 
   --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* fixed pair, independent of [data-theme] — the closing section shows
-     both palettes at once by design, not whichever one is currently active */
+  
   --paper-bg: #f6f3ec;
   --paper-text: #1a2a4a;
   --paper-accent: #0ea5e9;
@@ -164,7 +163,7 @@ textarea {
   color: var(--accent-text);
 }
 
-/* wide content never scrolls the page sideways */
+
 .scroll-x {
   overflow-x: auto;
 }
@@ -194,7 +193,7 @@ html {
   }
 }
 
-/* ---- shared modal chrome (add/edit form + detail view) ---- */
+
 @keyframes modal-in {
   from {
     opacity: 0;
@@ -258,7 +257,7 @@ html {
   background: var(--border);
 }
 
-/* ---- shared page wrapper (Category / Discover) ---- */
+
 @keyframes page-in {
   from {
     opacity: 0;
