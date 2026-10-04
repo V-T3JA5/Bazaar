@@ -4,8 +4,7 @@ import { SplitText } from 'gsap/SplitText'
 
 gsap.registerPlugin(SplitText)
 
-// Same rule as CategoryLayer: never revert() between states, only kill()
-// and tween from the current values.
+
 export default function HeroLayer({ active, reduceMotion }) {
   const rootRef = useRef(null)
   const titleRef = useRef(null)
@@ -15,7 +14,7 @@ export default function HeroLayer({ active, reduceMotion }) {
   const fadeTl = useRef(null)
   const firstRun = useRef(true)
 
-  // one-time entrance
+  
   useLayoutEffect(() => {
     if (reduceMotion) {
       gsap.set(bylineRef.current, { opacity: 1 })
@@ -43,7 +42,7 @@ export default function HeroLayer({ active, reduceMotion }) {
     }
   }, [reduceMotion])
 
-  // leave / return
+  
   useEffect(() => {
     if (firstRun.current) {
       firstRun.current = false
