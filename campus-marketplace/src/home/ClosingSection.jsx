@@ -3,13 +3,10 @@ import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { LABEL_TOTAL } from './stepConfig.js'
 
-// Edit this one line once you have the real handle — used here and in MobileStack.
+
 export const CREATOR_INSTAGRAM_URL = 'https://instagram.com/the__craftsman__'
 
-// Geometry, in one place. The diagonal runs from (SEAM_TOP, 0) to (SEAM_BOTTOM, 100%).
-// Each half is clipped to one side of that line, and content is padded so it
-// sits fully inside its own side — the earlier version centred content across
-// the whole width, so the diagonal sliced straight through the text.
+
 export default function ClosingSection({ active }) {
   const rootRef = useRef(null)
   const leftRef = useRef(null)
@@ -20,7 +17,7 @@ export default function ClosingSection({ active }) {
   const tlRef = useRef(null)
   const prevActive = useRef(false)
 
-  // parked pose: hidden, halves waiting off-screen on their own sides
+  
   useLayoutEffect(() => {
     gsap.set(rootRef.current, { autoAlpha: 0 })
     gsap.set(leftRef.current, { xPercent: -100 })
